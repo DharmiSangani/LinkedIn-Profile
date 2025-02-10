@@ -1,0 +1,99 @@
+{
+  "api": {
+    "linkedinprofile": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "linkedinprofile4fea4295"
+        }
+      ],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+              "userPoolConfig": {
+                "userPoolId": "authlinkedinprofile4fea4295"
+              }
+            }
+          ],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDate": "2025-04-11T09:17:43.798Z",
+              "apiKeyExpirationDays": 60,
+              "description": "Linkedin-Api"
+            },
+            "authenticationType": "API_KEY"
+          }
+        }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync"
+    }
+  },
+  "auth": {
+    "linkedinprofile4fea4295": {
+      "customAuth": false,
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 8
+        },
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito"
+    }
+  },
+  "function": {
+    "linkedinExportCSV": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_linkedinExportCSV_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "linkedinExportCSV"
+        }
+      ]
+    },
+    "AMPLIFY_function_linkedinExportCSV_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "linkedinExportCSV"
+        }
+      ]
+    },
+    "AMPLIFY_function_linkedinExportCSV_tableName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "linkedinExportCSV"
+        }
+      ]
+    }
+  }
+}

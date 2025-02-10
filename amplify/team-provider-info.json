@@ -1,0 +1,30 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-linkedinprofile-dev-2ae27-authRole",
+      "UnauthRoleArn": "arn:aws:iam::471112711082:role/amplify-linkedinprofile-dev-2ae27-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::471112711082:role/amplify-linkedinprofile-dev-2ae27-authRole",
+      "Region": "eu-north-1",
+      "DeploymentBucketName": "amplify-linkedinprofile-dev-2ae27-deployment",
+      "UnauthRoleName": "amplify-linkedinprofile-dev-2ae27-unauthRole",
+      "StackName": "amplify-linkedinprofile-dev-2ae27",
+      "StackId": "arn:aws:cloudformation:eu-north-1:471112711082:stack/amplify-linkedinprofile-dev-2ae27/ef825af0-e78c-11ef-991c-06c8eeffc907",
+      "AmplifyAppId": "dt68b5vk0urar"
+    },
+    "categories": {
+      "auth": {
+        "linkedinprofile4fea4295": {}
+      },
+      "api": {
+        "linkedinprofile": {}
+      },
+      "function": {
+        "linkedinExportCSV": {
+          "tableName": "LinkedinProfiles",
+          "deploymentBucketName": "amplify-linkedinprofile-dev-2ae27-deployment",
+          "s3Key": "amplify-builds/linkedinExportCSV-69364d7273587a372b39-build.zip"
+        }
+      }
+    }
+  }
+}
