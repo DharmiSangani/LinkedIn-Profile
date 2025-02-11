@@ -22,7 +22,7 @@
         "linkedinExportCSV": {
           "tableName": "LinkedinProfiles",
           "deploymentBucketName": "amplify-linkedinprofile-dev-2ae27-deployment",
-          "s3Key": "amplify-builds/linkedinExportCSV-69364d7273587a372b39-build.zip"
+          "s3Key": "amplify-builds/linkedinExportCSV-344f7662617277384a61-build.zip"
         }
       }
     }
