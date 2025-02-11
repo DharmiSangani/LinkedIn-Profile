@@ -5,7 +5,7 @@ type Profile
   @model
   @auth(rules: [
     { allow: public, operations: [read] },  # Anyone can read profiles
-    { allow: owner }  # Only the owner can edit/delete their profile
+    { allow: owner, operations: [read, update, delete] }  # Owner can update/delete their profile
   ]) {
   id: ID!
   name: String!
@@ -13,3 +13,4 @@ type Profile
   experience: Int
   openToWork: Boolean!
 }
+

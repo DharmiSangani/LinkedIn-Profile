@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+boto3 = "==1.36.16"
+botocore = "==1.36.16"
+certifi = "==2025.1.31"
+distlib = "==0.3.9"
+filelock = "==3.17.0"
+jmespath = "==1.0.1"
+packaging = "==24.2"
+pipenv = "==2024.4.1"
+platformdirs = "==4.3.6"
+python-dateutil = "==2.9.0.post0"
+s3transfer = "==0.11.2"
+six = "==1.17.0"
+urllib3 = "==2.3.0"
+virtualenv = "==20.29.1"
+
+[dev-packages]
+
+[requires]
+python_version = "3.13"
