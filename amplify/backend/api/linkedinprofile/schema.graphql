@@ -4,8 +4,8 @@
 type Profile
   @model
   @auth(rules: [
-    { allow: public, operations: [read] },  # Anyone can read profiles
-    { allow: owner, operations: [read, update, delete] }  # Owner can update/delete their profile
+    { allow: public, operations: [read] },  # Anyone can read
+    { allow: owner, operations: [create, update, delete] }  # Only the owner can modify
   ]) {
   id: ID!
   name: String!

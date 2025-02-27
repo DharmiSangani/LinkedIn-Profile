@@ -16,6 +16,7 @@ const client = generateClient();
 const App = () => {
   const [profiles, setProfiles] = useState([]);
   const [openToWorkProfiles, setOpenToWorkProfiles] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     jobRole: "",
@@ -44,7 +45,6 @@ const App = () => {
         variables: { filter: { openToWork: { eq: true } } },
       });
       setOpenToWorkProfiles(result.data.listProfiles.items);
-      console.log("Open to Work Profiles:", result.data.listProfiles.items);
     } catch (error) {
       console.error("Error fetching Open to Work profiles:", error);
     }
@@ -67,28 +67,24 @@ const App = () => {
 
   const handleDownloadCSV = async () => {
     try {
-      // Fetch Open to Work profiles using GraphQL API
       const result = await client.graphql({
         query: listProfiles,
         variables: { filter: { openToWork: { eq: true } } },
       });
-  
+
       const profiles = result.data.listProfiles.items;
-  
       if (profiles.length === 0) {
         alert("No Open to Work profiles found.");
         return;
       }
-  
-      // Convert data to CSV format
+
       const csvHeader = "Name,Job Role,Experience,Open to Work\n";
-      const csvRows = profiles.map(profile => 
-        `${profile.name},${profile.jobRole},${profile.experience},${profile.openToWork}`
+      const csvRows = profiles.map(
+        (profile) =>
+          `${profile.name},${profile.jobRole},${profile.experience},${profile.openToWork}`
       );
-  
+
       const csvContent = csvHeader + csvRows.join("\n");
-  
-      // Create a Blob and trigger download
       const blob = new Blob([csvContent], { type: "text/csv" });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -101,66 +97,83 @@ const App = () => {
       console.error("Error downloading CSV:", error);
     }
   };
-  
+
+  const filteredProfiles = openToWorkProfiles.filter(
+    (profile) =>
+      profile.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      profile.jobRole.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="app-container">
-      <div className="header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <h1>Welcome to LinkedIn Profile Manager</h1>
+      <header className="header">
+        <h1>LinkedIn Profile Manager</h1>
         <SignOut />
-      </div>
+      </header>
 
-      <div className="form-container">
+      <section className="form-section">
         <h2>Add LinkedIn Profile</h2>
-        <input
-          type="text"
-          placeholder="Name"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Job Role"
-          value={formData.jobRole}
-          onChange={(e) => setFormData({ ...formData, jobRole: e.target.value })}
-        />
-        <input
-          type="number"
-          placeholder="Experience (years)"
-          value={formData.experience}
-          onChange={(e) => setFormData({ ...formData, experience: Number(e.target.value) })}
-        />
-        <label>
-          Open to Work
+        <div className="form-group">
           <input
-            type="checkbox"
-            checked={formData.openToWork}
-            onChange={(e) => setFormData({ ...formData, openToWork: e.target.checked })}
+            type="text"
+            placeholder="Name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
-        </label>
-        <button onClick={addProfile}>Add Profile</button>
-      </div>
+          <input
+            type="text"
+            placeholder="Job Role"
+            value={formData.jobRole}
+            onChange={(e) => setFormData({ ...formData, jobRole: e.target.value })}
+          />
+          <input
+            type="number"
+            placeholder="Experience (in year)"
+            value={formData.experience}
+            onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
+          />
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              checked={formData.openToWork}
+              onChange={(e) => setFormData({ ...formData, openToWork: e.target.checked })}
+            />
+            Open to Work
+          </label>
+          <button className="add-button" onClick={addProfile}>Add Profile</button>
+        </div>
+      </section>
 
-      <h2>All Profiles</h2>
-      <ul>
-        {profiles.map((profile) => (
-          <li key={profile.id}>
-            {profile.name} - {profile.jobRole} ({profile.experience} years) -{" "}
-            {profile.openToWork ? "Open to Work" : "Not Open to Work"}
-          </li>
-        ))}
-      </ul>
+      <section className="profile-section">
+        <h2>All Profiles</h2>
+        <ul>
+          {profiles.map((profile) => (
+            <li key={profile.id} className="profile-item">
+              {profile.name} - {profile.jobRole} ({profile.experience} years) -{" "}
+              {profile.openToWork ? "Open to Work" : "Not Open to Work"}
+            </li>
+          ))}
+        </ul>
+      </section>
 
-      <h2>Open to Work Profiles</h2>
-      <ul>
-        {openToWorkProfiles.map((profile) => (
-          <li key={profile.id}>
-            {profile.name} - {profile.jobRole} ({profile.experience} years)
-          </li>
-        ))}
-      </ul>
-
-      <button onClick={handleDownloadCSV}>Download CSV</button>
+      <section className="profile-section">
+        <h2>Open to Work Profiles</h2>
+        <input
+          type="text"
+          placeholder="Search by Name or Job Role..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-bar"
+        />
+        <ul>
+          {filteredProfiles.map((profile) => (
+            <li key={profile.id} className="profile-item">
+              {profile.name} - {profile.jobRole} ({profile.experience} years)
+            </li>
+          ))}
+        </ul>
+        <button className="download-button" onClick={handleDownloadCSV}>Download CSV</button>
+      </section>
     </div>
   );
 };

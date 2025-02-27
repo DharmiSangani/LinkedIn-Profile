@@ -24,6 +24,9 @@
           "deploymentBucketName": "amplify-linkedinprofile-dev-2ae27-deployment",
           "s3Key": "amplify-builds/linkedinExportCSV-344f7662617277384a61-build.zip"
         }
+      },
+      "hosting": {
+        "S3AndCloudFront": {}
       }
     }
   }
